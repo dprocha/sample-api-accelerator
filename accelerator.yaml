@@ -63,9 +63,9 @@ engine:
   - include: [ "**/*" ]
     exclude: [ "config/*.yaml", "Tiltfile", "README.md", "catalog/*.yaml", "db/**", "vivo-accelerator.yaml" ]
   - include: [ "db/k8s/**" ]
-    condition: "#database == postgresql_k8s"
+    condition: "#database == 'postgresql_k8s'"
   - include: [ "db/azure/**" ]
-    condition: "#database == postgresql_azure"
+    condition: "#database == 'postgresql_azure'"
   - include: [ "Tiltfile" ]
     chain:
     - type: ReplaceText
