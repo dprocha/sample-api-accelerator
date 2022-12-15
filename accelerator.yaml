@@ -69,6 +69,10 @@ engine:
       substitutions:
       - text: namespace_name
         with: "#namespace"
+    - type: ReplaceText
+      substitutions:
+      - text: ": sample-api-accelerator"
+        with: "': ' + #artifactId.toLowerCase()"
   - include: [ "db/azure/**" ]
     condition: "#database == 'postgresql_azure'"
     chain:
@@ -76,6 +80,10 @@ engine:
       substitutions:
       - text: namespace_name
         with: "#namespace"
+    - type: ReplaceText
+      substitutions:
+      - text: ": sample-api-accelerator"
+        with: "': ' + #artifactId.toLowerCase()"
   - include: [ "Tiltfile" ]
     chain:
     - type: ReplaceText
