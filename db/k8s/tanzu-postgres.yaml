@@ -1,8 +1,11 @@
 apiVersion: sql.tanzu.vmware.com/v1
 kind: Postgres
 metadata:
-  name: vivo-db
+  name: sample-api-accelerator-postgres
 spec:
+  #
+  # Global features
+  #
   imagePullSecret:
     name: tap-registry
   pgConfig:
@@ -12,9 +15,14 @@ spec:
   postgresVersion:
     name: postgres-14 # View available versions with `kubectl get postgresversion`
   serviceType: ClusterIP
+
+  #
+  # Data Pod features
+  #
   storageClassName: default
   storageSize: 800M
   cpu: "0.5"
   memory: 800Mi
+ 
   monitorStorageClassName: default
   monitorStorageSize: 1G

@@ -6,7 +6,6 @@ metadata:
   labels:
     apps.tanzu.vmware.com/workload-type: web
     app.kubernetes.io/part-of: sample-api-accelerator
-    # apps.tanzu.vmware.com/has-tests: "true"
 spec:
   params:
     - name: annotations
@@ -22,4 +21,4 @@ spec:
       ref:
         apiVersion: services.apps.tanzu.vmware.com/v1alpha1
         kind: ResourceClaim
-        name: postgres-claim # name must match the service claim name
+        name: sample-api-accelerator-db-claim # name must match the service claim name
