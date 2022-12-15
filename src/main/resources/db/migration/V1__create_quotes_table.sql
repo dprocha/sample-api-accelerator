@@ -4,8 +4,4 @@ CREATE TABLE quotes(
    author VARCHAR(256)
 );
 
-INSERT INTO quotes (id,quote,author) VALUES (1,'Never, never, never give up','Winston Churchill');
-INSERT INTO quotes (id,quote,author) VALUES (2,'While there''s life, there''s hope','Marcus Tullius Cicero');
-INSERT INTO quotes (id,quote,author) VALUES (3,'Failure is success in progress','Anonymous');
-INSERT INTO quotes (id,quote,author) VALUES (4,'Success demands singleness of purpose','Vincent Lombardi');
-INSERT INTO quotes (id,quote,author) VALUES (5,'The shortest answer is doing','Lord Herbert');
+INSERT INTO quotes (id,quote,author) VALUES (1,'Vivo 4.0 Blueprint API','Cloud Center Of Excellence (CCOE)');
