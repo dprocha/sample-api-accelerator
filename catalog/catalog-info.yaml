@@ -1,0 +1,34 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: sample-api-accelerator
+  description: Spring Application
+spec:
+  owner: dev-team-2
+  domain: acme-internal-apps
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sample-api-accelerator
+  description: Spring Boot
+  tags:
+    - microservice
+  annotations:
+    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=sample-api-accelerator'
+spec:
+  type: service
+  lifecycle: alpha
+  owner: dev-team-2
+  system: sample-api-accelerator
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: postgreSQL
+  description: PostgreSQL Service
+spec:
+  type: database
+  owner: platform-team
+  system: sample-api-accelerator
+---

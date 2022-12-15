@@ -1,0 +1,19 @@
+---
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ResourceClaim
+metadata:
+  name: postgres-claim
+  namespace: vivo-4-0
+spec:
+  ref:
+    apiVersion: v1
+    kind: Secret
+    name: vivo-db-conn
+
+# Equivalent cli commands
+#
+#  tanzu service claim create cloudsql-postgres-claim \
+#  --resource-name cloudsql-postgres-db-conn \
+#  --resource-kind Secret \
+#  --resource-api-version v1 \
+#  --namespace asaikali
