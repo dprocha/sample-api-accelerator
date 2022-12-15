@@ -64,8 +64,18 @@ engine:
     exclude: [ "config/*.yaml", "Tiltfile", "README.md", "catalog/*.yaml", "db/**", "vivo-accelerator.yaml" ]
   - include: [ "db/k8s/**" ]
     condition: "#database == 'postgresql_k8s'"
+    chain:
+    - type: ReplaceText
+      substitutions:
+      - text: namespace_name
+        with: "#namespace"
   - include: [ "db/azure/**" ]
     condition: "#database == 'postgresql_azure'"
+    chain:
+    - type: ReplaceText
+      substitutions:
+      - text: namespace_name
+        with: "#namespace"
   - include: [ "Tiltfile" ]
     chain:
     - type: ReplaceText
