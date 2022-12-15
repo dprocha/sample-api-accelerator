@@ -2,7 +2,7 @@ apiVersion: database.example.org/v1alpha1
 kind: PostgreSQLInstance
 metadata:
   name: vivo-db
-  namespace: vivo-4-0
+  namespace: namespace_name
 spec:
   parameters:
     storageGB: 20

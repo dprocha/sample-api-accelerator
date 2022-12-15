@@ -13,7 +13,7 @@ accelerator:
   - name: repositoryPrefix
     inputType: text
     label: Endereço Container Registry
-    defaultValue: "tapf3658e5b.azurecr.io/tap/sc/vivo/vivo-api-source"
+    defaultValue: "tapf3658e5b.azurecr.io/tap/sc/vivo-4-0"
     required: true
   - name: namespace
     inputType: text
@@ -62,6 +62,10 @@ engine:
   merge:
   - include: [ "**/*" ]
     exclude: [ "config/*.yaml", "Tiltfile", "README.md", "catalog/*.yaml", "db/**", "vivo-accelerator.yaml" ]
+  - include: [ "db/k8s/**" ]
+    condition: "#database == postgresql-k8s"
+  - include: [ "db/azure/**" ]
+    condition: "#database == postgresql-azure"
   - include: [ "Tiltfile" ]
     chain:
     - type: ReplaceText
@@ -118,71 +122,8 @@ engine:
       substitutions:
       - text: sample-api-accelerator
         with: "#artifactId.toLowerCase()"
-
-
-  
-#      - include: [ "**/**" ]
-#        exclude: [ "catalog/*.yaml", "config/*.yaml", "db/**", "accelerator.yaml", "pom.xml", "README.md", "Tiltfile", "vivo-accelerator.yaml"]
-#      - include: [ "db/k8s/**" ]
-#        condition: "#database == postgresql-k8s"
-#      - include: [ "db/azure/**" ]
-#        condition: "#database == postgresql-azure"
-#      - include: [ "catalog/*.yaml" ]
-#        chain:
-#          - type: ReplaceText
-#            substitutions:
-#              - text: sample-api-accelerator
-#                with: "#artifactId"
-#    - include: [ "config/*.yaml" ]
-#      chain:
-#        - type: ReplaceText
-#          substitutions:
-#            - text: ": sample-api-accelerator"
-#              with: "': ' + #artifactId.toLowerCase()"
-#        - type: ReplaceText
-#          substitutions:
-#            - text: ": namespace_name"
-#              with: "': ' + #namespace"
-#        - type: ReplaceText
-#          substitutions:
-#            - text: ": git_repo_url"
-#              with: "': ' + #gitRepoUrl"
-#        - type: ReplaceText
-#          substitutions:
-#            - text: ": git_repo_branch"
-#              with: "': ' + #gitRepoBranch"
-#    - include: [ "pom.xml" ]
-#      chain:
-#        - type: ReplaceText
-#          substitutions:
-#            - text: sample-api-accelerator
-#              with: "#artifactId.toLowerCase()"
-#        - type: ReplaceText
-#          condition: "#javaVersion == '17'"
-#          substitutions:
-#            - text: 11
-#              with: "#javaVersion"
-#    - include: [ "README.md" ]
-#      chain:
-#        - type: ReplaceText
-#          substitutions:
-#            - text: sample-api-accelerator
-#              with: "#artifactId"
-#    - include: [ "Tiltfile" ]
-#      chain:
-#        - type: ReplaceText
-#          substitutions:
-#            - text: sample-api-accelerator
-#              with: "#artifactId.toLowerCase()"
-#        - type: ReplaceText
-#          substitutions:
-#            - text: your-registry.io/project
-#              with: "#repositoryPrefix"
-#        - type: ReplaceText
-#          substitutions:
-#            - text: namespace_name
-#              with: "#namespace"
-#        - type: ReplaceText
-#          substitutions:
-#            - text: k8s_context_name
-#              with: "#k8sContextName"
+    - type: ReplaceText
+      condition: "#javaVersion == '17'"
+      substitutions:
+      - text: 11
+        with: "#javaVersion"
