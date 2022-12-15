@@ -1,14 +1,14 @@
 accelerator:
   displayName: Vivo API
   description: Vivo blueprint para desenvolvimento de APIs utilizado Java com Spring Boot e banco de dados PostgreSQL. O PostgreSQL poderá ser provisonado sobre Kubernetes usando Tanzu PostgreSQL Operator ou provido pelo cloud provider (Azure) de sua escolha usando projeto crossplane.io.
-  iconUrl: https://raw.githubusercontent.com/dprocha/icons-accelerator/main/icons/vivo-logo.png
+  iconUrl: https://raw.githubusercontent.com/dprocha/icons-accelerator/main/icons/vivo-icon.png
   tags:
     - Java
     - Spring
-    - Web
-    - JPA
     - API
     - PostgreSQL
+    - vivo
+    - CCOE
   options:
     - name: repositoryPrefix
       inputType: text
@@ -57,19 +57,20 @@ accelerator:
           value: "11"
         - text: 17
           value: "17"
-  merge:
+  engine:
+    merge:
     - include: [ "**/**" ]
       exclude: [ "catalog/*.yaml", "config/*.yaml", "db/**", "accelerator.yaml", "pom.xml", "README.md", "Tiltfile", "vivo-accelerator.yaml"]
     - include: [ "db/k8s/**" ]
       condition: "#database == postgresql-k8s"
     - include: [ "db/azure/**" ]
       condition: "#database == postgresql-azure"
-#    - include: [ "catalog/*.yaml" ]
-#      chain:
-#        - type: ReplaceText
-#          substitutions:
-#            - text: sample-api-accelerator
-#              with: "#artifactId"
+    - include: [ "catalog/*.yaml" ]
+      chain:
+      - type: ReplaceText
+        substitutions:
+        - text: sample-api-accelerator
+          with: "#artifactId"
 #    - include: [ "config/*.yaml" ]
 #      chain:
 #        - type: ReplaceText
