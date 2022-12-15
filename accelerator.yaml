@@ -1,7 +1,7 @@
 accelerator:
-  displayName: Vivo REST API
-  description: Blueprint aplicação Java com Spring Boot, utilizado Rest API e banco de dados PostgreSQL. O PostgreSQL poderá ser provisonado sobre Kubernetes usando Tanzu PostgreSQL Operator ou provido pelo cloud provider de sua escolha usando projeto crossplane.io.
-  iconUrl: https://raw.githubusercontent.com/dprocha/icons-accelerator/main/icons/vivo.png
+  displayName: Vivo API
+  description: Vivo blueprint para desenvolvimento de APIs utilizado Java com Spring Boot e banco de dados PostgreSQL. O PostgreSQL poderá ser provisonado sobre Kubernetes usando Tanzu PostgreSQL Operator ou provido pelo cloud provider (Azure) de sua escolha usando projeto crossplane.io.
+  iconUrl: https://raw.githubusercontent.com/dprocha/icons-accelerator/main/icons/vivo-logo.png
   tags:
     - Java
     - Spring
@@ -18,7 +18,7 @@ accelerator:
     - name: namespace
       inputType: text
       label: Namespace Kubernetes
-      defaultValue: "vivo"
+      defaultValue: "vivo-4-0"
       required: true
     - name: k8sContextName
       inputType: text
@@ -64,62 +64,62 @@ accelerator:
       condition: "#database == postgresql-k8s"
     - include: [ "db/azure/**" ]
       condition: "#database == postgresql-azure"
-    - include: [ "catalog/*.yaml" ]
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: sample-api-accelerator
-              with: "#artifactId"
-    - include: [ "config/*.yaml" ]
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: ": sample-api-accelerator"
-              with: "': ' + #artifactId.toLowerCase()"
-        - type: ReplaceText
-          substitutions:
-            - text: ": namespace_name"
-              with: "': ' + #namespace"
-        - type: ReplaceText
-          substitutions:
-            - text: ": git_repo_url"
-              with: "': ' + #gitRepoUrl"
-        - type: ReplaceText
-          substitutions:
-            - text: ": git_repo_branch"
-              with: "': ' + #gitRepoBranch"
-    - include: [ "pom.xml" ]
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: sample-api-accelerator
-              with: "#artifactId.toLowerCase()"
-        - type: ReplaceText
-          condition: "#javaVersion == '17'"
-          substitutions:
-            - text: 11
-              with: "#javaVersion"
-    - include: [ "README.md" ]
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: sample-api-accelerator
-              with: "#artifactId"
-    - include: [ "Tiltfile" ]
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: sample-api-accelerator
-              with: "#artifactId.toLowerCase()"
-        - type: ReplaceText
-          substitutions:
-            - text: your-registry.io/project
-              with: "#repositoryPrefix"
-        - type: ReplaceText
-          substitutions:
-            - text: namespace_name
-              with: "#namespace"
-        - type: ReplaceText
-          substitutions:
-            - text: k8s_context_name
-              with: "#k8sContextName"
+#    - include: [ "catalog/*.yaml" ]
+#      chain:
+#        - type: ReplaceText
+#          substitutions:
+#            - text: sample-api-accelerator
+#              with: "#artifactId"
+#    - include: [ "config/*.yaml" ]
+#      chain:
+#        - type: ReplaceText
+#          substitutions:
+#            - text: ": sample-api-accelerator"
+#              with: "': ' + #artifactId.toLowerCase()"
+#        - type: ReplaceText
+#          substitutions:
+#            - text: ": namespace_name"
+#              with: "': ' + #namespace"
+#        - type: ReplaceText
+#          substitutions:
+#            - text: ": git_repo_url"
+#              with: "': ' + #gitRepoUrl"
+#        - type: ReplaceText
+#          substitutions:
+#            - text: ": git_repo_branch"
+#              with: "': ' + #gitRepoBranch"
+#    - include: [ "pom.xml" ]
+#      chain:
+#        - type: ReplaceText
+#          substitutions:
+#            - text: sample-api-accelerator
+#              with: "#artifactId.toLowerCase()"
+#        - type: ReplaceText
+#          condition: "#javaVersion == '17'"
+#          substitutions:
+#            - text: 11
+#              with: "#javaVersion"
+#    - include: [ "README.md" ]
+#      chain:
+#        - type: ReplaceText
+#          substitutions:
+#            - text: sample-api-accelerator
+#              with: "#artifactId"
+#    - include: [ "Tiltfile" ]
+#      chain:
+#        - type: ReplaceText
+#          substitutions:
+#            - text: sample-api-accelerator
+#              with: "#artifactId.toLowerCase()"
+#        - type: ReplaceText
+#          substitutions:
+#            - text: your-registry.io/project
+#              with: "#repositoryPrefix"
+#        - type: ReplaceText
+#          substitutions:
+#            - text: namespace_name
+#              with: "#namespace"
+#        - type: ReplaceText
+#          substitutions:
+#            - text: k8s_context_name
+#              with: "#k8sContextName"
