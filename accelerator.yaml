@@ -62,6 +62,7 @@ engine:
   merge:
   - include: [ "**/*" ]
     exclude: [ "config/*.yaml", "Tiltfile", "README.md", "catalog/*.yaml", "db/**", "vivo-accelerator.yaml" ]
+  - include: [ "db/local/**" ]
   - include: [ "db/k8s/**" ]
     condition: "#database == 'postgresql_k8s'"
     chain:
