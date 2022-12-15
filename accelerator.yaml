@@ -3,74 +3,136 @@ accelerator:
   description: Vivo blueprint para desenvolvimento de APIs utilizado Java com Spring Boot e banco de dados PostgreSQL. O PostgreSQL poderá ser provisonado sobre Kubernetes usando Tanzu PostgreSQL Operator ou provido pelo cloud provider (Azure).
   iconUrl: https://raw.githubusercontent.com/dprocha/icons-accelerator/main/icons/vivo-icon.png
   tags:
-    - Java
-    - Spring
-    - API
-    - PostgreSQL
-    - vivo
-    - CCOE
+  - Java
+  - Spring
+  - API
+  - PostgreSQL
+  - vivo
+  - CCOE
   options:
-    - name: repositoryPrefix
-      inputType: text
-      label: Endereço Container Registry
-      defaultValue: "tapf3658e5b.azurecr.io/tap/sc/vivo/vivo-api-source"
-      required: true
-    - name: namespace
-      inputType: text
-      label: Namespace Kubernetes
-      defaultValue: "vivo-4-0"
-      required: true
-    - name: k8sContextName
-      inputType: text
-      label: Contexto Cluster Kubernetes
-      required: true
-      defaultValue: "tap-iterate-admin"
-    - name: gitRepoUrl
-      inputType: text
-      label: Repositório Git Código Fonte
-      required: true
-      defaultValue: "https://github.com/dprocha/vivo-api.git"
-    - name: gitRepoBranch
-      inputType: text
-      label: Nome da Branche Repositório Git
-      required: true
-      defaultValue: "main"
-    - name: database
-      label: "Banco de Dados:"
-      inputType: select
-      dataType: string
-      display: true
-      required: true
-      choices:
-        - text: PostgreSQL Kubernetes
-          value: "postgresql-k8s"
-        - text: Azure PostgreSQL
-          value: "postgresql-azure"
-    - name: javaVersion
-      label: "Versão Java:"
-      inputType: select
-      dataType: string
-      display: true
-      required: true
-      choices:
-        - text: 11
-          value: "11"
-        - text: 17
-          value: "17"
-  engine:
-    merge:
-      - include: [ "**/**" ]
-        exclude: [ "catalog/*.yaml", "config/*.yaml", "db/**", "accelerator.yaml", "pom.xml", "README.md", "Tiltfile", "vivo-accelerator.yaml"]
-      - include: [ "db/k8s/**" ]
-        condition: "#database == postgresql-k8s"
-      - include: [ "db/azure/**" ]
-        condition: "#database == postgresql-azure"
-      - include: [ "catalog/*.yaml" ]
-        chain:
-          - type: ReplaceText
-            substitutions:
-              - text: sample-api-accelerator
-                with: "#artifactId"
+  - name: repositoryPrefix
+    inputType: text
+    label: Endereço Container Registry
+    defaultValue: "tapf3658e5b.azurecr.io/tap/sc/vivo/vivo-api-source"
+    required: true
+  - name: namespace
+    inputType: text
+    label: Namespace Kubernetes
+    defaultValue: "vivo-4-0"
+    required: true
+  - name: k8sContextName
+    inputType: text
+    label: Contexto Cluster Kubernetes
+    required: true
+    defaultValue: "tap-iterate-admin"
+  - name: gitRepoUrl
+    inputType: text
+    label: Repositório Git Código Fonte
+    required: true
+    defaultValue: "https://github.com/dprocha/vivo-api.git"
+  - name: gitRepoBranch
+    inputType: text
+    label: Nome da Branche Repositório Git
+    required: true
+    defaultValue: "main"
+  - name: database
+    label: "Banco de Dados:"
+    inputType: select
+    dataType: string
+    display: true
+    required: true
+    choices:
+      - text: PostgreSQL Kubernetes
+        value: "postgresql-k8s"
+      - text: Azure PostgreSQL
+        value: "postgresql-azure"
+  - name: javaVersion
+    label: "Versão Java:"
+    inputType: select
+    dataType: string
+    display: true
+    required: true
+    choices:
+      - text: 11
+        value: "11"
+      - text: 17
+        value: "17"
+
+engine:
+  merge:
+  - include: [ "**/*" ]
+    exclude: [ "config/*.yaml", "Tiltfile", "README.md", "catalog/*.yaml", "db/**", "vivo-accelerator.yaml" ]
+  - include: [ "Tiltfile" ]
+    chain:
+    - type: ReplaceText
+      substitutions:
+      - text: sample-api-accelerator
+        with: "#artifactId.toLowerCase()"
+    - type: ReplaceText
+      substitutions:
+      - text: your-registry.io/project
+        with: "#repositoryPrefix"
+    - type: ReplaceText
+      substitutions:
+      - text: namespace_name
+        with: "#namespace"
+    - type: ReplaceText
+      substitutions:
+      - text: k8s_context_name
+        with: "#k8sContextName"
+
+  - include: [ "config/*.yaml" ]
+    chain:
+    - type: ReplaceText
+      substitutions:
+      - text: ": sample-api-accelerator"
+        with: "': ' + #artifactId.toLowerCase()"
+    - type: ReplaceText
+      substitutions:
+      - text: ": namespace_name"
+        with: "': ' + #namespace"
+    - type: ReplaceText
+      substitutions:
+      - text: ": git_repo_url"
+        with: "': ' + #gitRepoUrl"
+    - type: ReplaceText
+      substitutions:
+      - text: ": git_repo_branch"
+        with: "': ' + #gitRepoBranch"
+
+  - include: [ "README.md" ]
+    chain:
+    - type: ReplaceText
+      substitutions:
+      - text: sample-api-accelerator
+        with: "#artifactId"
+  - include: [ "catalog/*.yaml" ]
+    chain:
+    - type: ReplaceText
+      substitutions:
+      - text: sample-api-accelerator
+        with: "#artifactId"
+  - include: [ "pom.xml" ]
+    chain:
+    - type: ReplaceText
+      substitutions:
+      - text: sample-api-accelerator
+        with: "#artifactId.toLowerCase()"
+
+
+  
+#      - include: [ "**/**" ]
+#        exclude: [ "catalog/*.yaml", "config/*.yaml", "db/**", "accelerator.yaml", "pom.xml", "README.md", "Tiltfile", "vivo-accelerator.yaml"]
+#      - include: [ "db/k8s/**" ]
+#        condition: "#database == postgresql-k8s"
+#      - include: [ "db/azure/**" ]
+#        condition: "#database == postgresql-azure"
+#      - include: [ "catalog/*.yaml" ]
+#        chain:
+#          - type: ReplaceText
+#            substitutions:
+#              - text: sample-api-accelerator
+#                with: "#artifactId"
 #    - include: [ "config/*.yaml" ]
 #      chain:
 #        - type: ReplaceText
