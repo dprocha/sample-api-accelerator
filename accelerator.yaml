@@ -71,8 +71,8 @@ engine:
         with: "#namespace"
     - type: ReplaceText
       substitutions:
-      - text: ": sample-api-accelerator"
-        with: "#artifactId.toLowerCase()"
+      - text: ": sample-api-accelerator-postgres"
+        with: "': ' + #artifactId.toLowerCase() + '-postgres'"
   - include: [ "db/azure/**" ]
     condition: "#database == 'postgresql_azure'"
     chain:
@@ -82,8 +82,8 @@ engine:
         with: "#namespace"
     - type: ReplaceText
       substitutions:
-      - text: ": sample-api-accelerator"
-        with: "#artifactId.toLowerCase()"
+      - text: ": sample-api-accelerator-postgres"
+        with: "': ' + #artifactId.toLowerCase() + '-postgres'"
   - include: [ "Tiltfile" ]
     chain:
     - type: ReplaceText
