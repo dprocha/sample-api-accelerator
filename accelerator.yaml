@@ -17,7 +17,7 @@ accelerator:
     required: true
   - name: namespace
     inputType: text
-    label: Namespace Kubernetes
+    label: Nome do Projeto (Namespace do Kubernetes)
     defaultValue: "vivo-4-0"
     required: true
   - name: k8sContextName
@@ -47,7 +47,7 @@ accelerator:
       - text: Azure PostgreSQL
         value: "postgresql_azure"
   - name: javaVersion
-    label: "Versão Java:"
+    label: "Versão do Framework:"
     inputType: select
     dataType: string
     display: true
