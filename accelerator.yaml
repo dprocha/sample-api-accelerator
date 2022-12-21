@@ -1,6 +1,6 @@
 accelerator:
-  displayName: Vivo API
-  description: Vivo blueprint para desenvolvimento de APIs utilizado Java com Spring Boot e banco de dados PostgreSQL. O PostgreSQL poderá ser provisonado sobre Kubernetes usando Tanzu PostgreSQL Operator ou provido pelo cloud provider (Azure).
+  displayName: Portal Quarks
+  description: Acelere a entrega do seu projeto utilizando aplicativos, serviços e datasets prontos do nosso catálogo.
   iconUrl: https://raw.githubusercontent.com/dprocha/icons-accelerator/main/icons/vivo-icon.png
   tags:
   - Java
